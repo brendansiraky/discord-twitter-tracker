@@ -11,21 +11,15 @@ import { discordAssociatedTwitterAccounts } from './db/discordAssociatedTwitterA
 export async function crawlTweets() {
 
     const twitterId = await getTwitterIdFromHandle('sunterra_io')
-
-    console.log('got twitterIdss')
-    
+ 
     const retweetedTweetsIds = await getRetweetedTweetIds(twitterId)
-    console.log('got retweetedIds')
     
     const discordIdsThatShouldHaveRole = await discordAssociatedTwitterAccounts()
     .whereIn('twitter_id', retweetedTweetsIds)
     .pluck('discord_id')
     
-    console.log('got discordIdsTHatShouldHaveRole')
     // Fetch the guild and cache.
     const guild = await discordClient.guilds.fetch(config.CHANNEL_ID)
-    
-    console.log('got Guild')
 
     let lastMemberId;
     while (true) {
@@ -39,7 +33,6 @@ export async function crawlTweets() {
             })
     
             lastMemberId = members.last()?.id
-            console.log('doing loop:', lastMemberId)
             if (members.size < limit) {
                 console.log('breaking loop')
                 break;
@@ -55,12 +48,9 @@ export async function crawlTweets() {
 
     // Get the role from the guild.
     const role = await guild.roles.fetch(config.ROLE_ID)
-
-    console.log('got Role')
     
     // Get all members that belong to this role.
     const membersWithRole = role.members.map(m => m.user.id)
-    console.log('got members with role')
     
     // Loop through the current members that have a role, and check to see whether they should keep it or not.
     for (const memberWithRole of membersWithRole) {
