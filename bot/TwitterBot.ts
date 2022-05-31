@@ -15,7 +15,7 @@ export const twitterBot = async (message: Message) => {
     if (message.channel.type === 'DM') {
 
         try {
-            const twitterUserId = await getTwitterIdFromHandle(message.content)
+            const twitterUserId = await getTwitterIdFromHandle(message.content.replace('@', ''))
             const discordUserId = message.author.id
 
             if (!twitterUserId) {
