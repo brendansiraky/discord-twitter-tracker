@@ -48,7 +48,7 @@ export const twitterBot = async (message: Message) => {
             }
         } catch (error) {
             // If for any reason we catch an error, reply with a generic message.
-            message.reply(`Sorry but your handle was not able to be processed. Make sure you are entering just the address on it's own, as well as making sure the spelling is correct.`)
+            message.reply(`Sorry but your handle was not able to be processed. Make sure you are entering just the handle on it's own, as well as making sure the spelling is correct.`)
         }
 
     }

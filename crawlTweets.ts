@@ -1,5 +1,3 @@
-import Cron from 'cron'
-
 import { config } from './config'
 import { addRole } from './utils/addRole'
 import { removeRole } from './utils/removeRole'
@@ -10,7 +8,7 @@ import { discordAssociatedTwitterAccounts } from './db/discordAssociatedTwitterA
 
 export async function crawlTweets() {
 
-    const twitterId = await getTwitterIdFromHandle('sunterra_io')
+    const twitterId = await getTwitterIdFromHandle(config.TWITTER_ACCOUNT_HANDLE)
  
     const retweetedTweetsIds = await getRetweetedTweetIds(twitterId)
     
@@ -34,7 +32,6 @@ export async function crawlTweets() {
     
             lastMemberId = members.last()?.id
             if (members.size < limit) {
-                console.log('breaking loop')
                 break;
             }
             

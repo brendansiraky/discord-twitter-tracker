@@ -1,7 +1,7 @@
 import { DateTime } from 'luxon'
-import { twitterClient } from './twitterClient'
 
-const TIMEFRAME_IN_DAYS = 7
+import { twitterClient } from './twitterClient'
+import { config } from '../config'
 
 // Grab a list of tweetIds that have retweeted a specific userId in the past X amount of time
 export async function getRetweetedTweetIds(userId: string) {
@@ -15,7 +15,7 @@ export async function getRetweetedTweetIds(userId: string) {
 
     const tweets = await twitterClient.v2.userTimeline(userId, {
         "tweet.fields": ['created_at'],
-        start_time: DateTime.utc().minus({ days: TIMEFRAME_IN_DAYS }).toISO()
+        start_time: DateTime.utc().minus({ days: Number(config.RETWEET_TIMEFRAME_IN_DAYS) }).toISO()
     })
 
     let tweetIds = []
