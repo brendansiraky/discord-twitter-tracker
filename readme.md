@@ -48,6 +48,3 @@ npm run start
 ## Notes
 
 - It's assumed that a database already exist to interact with.
-
-## License
-[MIT](https://choosealicense.com/licenses/mit/)
